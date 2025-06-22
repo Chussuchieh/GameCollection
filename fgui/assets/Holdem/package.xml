@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="uhd4scsx">
+  <resources>
+    <image id="m3500" name="spades.png" path="/atlas/" exported="true"/>
+    <image id="m3501" name="hearts.png" path="/atlas/" exported="true"/>
+    <image id="m3502" name="diamonds.png" path="/atlas/" exported="true"/>
+    <image id="m3503" name="clubs.png" path="/atlas/" exported="true"/>
+    <image id="m3504" name="select.png" path="/atlas/" exported="true"/>
+    <component id="m3506" name="HoldemView.xml" path="/" exported="true"/>
+    <image id="m3507" name="card.png" path="/atlas/" exported="true"/>
+    <image id="m3508" name="cardback.png" path="/atlas/" exported="true"/>
+    <image id="sr0u9" name="clubs_06.png" path="/atlas/"/>
+    <image id="sr0ua" name="clubs_10.png" path="/atlas/"/>
+    <image id="sr0ub" name="chips16.png" path="/atlas/"/>
+  </resources>
+  <publish name="" path="../GameSelect\assets\holdem\fgui" packageCount="2" genCode="true" codePath="../GameSelect\assets\holdem\layer"/>
+</packageDescription>

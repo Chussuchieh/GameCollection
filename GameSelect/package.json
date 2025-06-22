@@ -1,0 +1,10 @@
+{
+  "name": "GameSelect",
+  "uuid": "44744489-8372-4061-81ee-da2b2d5b17ce",
+  "creator": {
+    "version": "3.7.3"
+  },
+  "dependencies": {
+    "fairygui-cc": "^1.2.2"
+  }
+}

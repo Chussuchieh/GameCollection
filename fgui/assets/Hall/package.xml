@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="k3oj6dse">
+  <resources>
+    <component id="ske60" name="HallView.xml" path="/" exported="true"/>
+    <image id="7xoga" name="bg.png" path="/atlas/"/>
+    <component id="m350b" name="GameEntries.xml" path="/component/"/>
+  </resources>
+  <publish name="" path="../GameSelect\assets\hall\fgui" packageCount="2" genCode="true"/>
+</packageDescription>

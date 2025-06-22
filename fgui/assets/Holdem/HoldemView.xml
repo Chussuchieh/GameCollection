@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="1334,750">
+  <displayList>
+    <graph id="n10_m350" name="n10" xy="0,0" size="1334,750" type="rect" lineSize="0" fillColor="#ff034a03"/>
+    <image id="n4_m350" name="back" src="m3508" fileName="atlas/cardback.png" xy="259,302"/>
+    <image id="n5_m350" name="n5" src="m3507" fileName="atlas/card.png" xy="431,181"/>
+    <image id="n6_m350" name="n6" src="m3504" fileName="atlas/select.png" xy="869,435"/>
+    <image id="n8_m350" name="n8" src="m3501" fileName="atlas/hearts.png" xy="477,250" color="#ff0000"/>
+    <text id="n9_m350" name="n9" xy="439,188" size="24,44" fontSize="32" color="#ff0000" text="A"/>
+    <image id="n12_sr0u" name="n12" src="sr0ua" fileName="atlas/clubs_10.png" xy="589,249"/>
+  </displayList>
+</component>
