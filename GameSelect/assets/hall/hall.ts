@@ -1,21 +1,14 @@
-import { _decorator, assetManager, Component, Node } from 'cc';
+import { _decorator, assetManager, Component, Node } from "cc";
 import * as fgui from "fairygui-cc";
-import HallView from './layer/Hall/HallView';
+import { Controller } from "../common/UIController";
 const { ccclass, property } = _decorator;
 
-@ccclass('hall')
+@ccclass("hall")
 export class hall extends Component {
     start() {
-        fgui.GRoot.create();
-        fgui.UIPackage.loadPackage(assetManager.getBundle('hall'), 'fgui/Hall', () => {
-            fgui.UIObjectFactory.setExtension(HallView.URL, HallView)
-            fgui.GRoot.inst.addChild(HallView.createInstance());
-        })
+        Controller.inst.initFairyGUI();
+        Controller.inst.openView("HallView");
     }
 
-    update(deltaTime: number) {
-
-    }
+    update(deltaTime: number) {}
 }
-
-

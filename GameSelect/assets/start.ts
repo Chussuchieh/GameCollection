@@ -1,17 +1,13 @@
-import { _decorator, assetManager, Component, director, Node } from 'cc';
+import { _decorator, assetManager, Component, director, Node } from "cc";
 const { ccclass, property } = _decorator;
 
-@ccclass('start')
+@ccclass("start")
 export class start extends Component {
     start() {
-        assetManager.loadBundle('hall', () => {
-            director.loadScene('hall')
-        })
+        assetManager.loadBundle("hall", () => {
+            director.loadScene("hall");
+        });
     }
 
-    update(deltaTime: number) {
-
-    }
+    update(deltaTime: number) {}
 }
-
-
