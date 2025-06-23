@@ -4,7 +4,7 @@ import * as fgui from "fairygui-cc";
 
 export default class UI_HallView extends fgui.GComponent {
 
-	public KW_TexasHoldem:fgui.GButton;
+	public KW_KW_TH:fgui.GButton;
 	public static URL:string = "ui://k3oj6dseske60";
 
 	public static createInstance():UI_HallView {
@@ -12,6 +12,6 @@ export default class UI_HallView extends fgui.GComponent {
 	}
 
 	protected onConstruct():void {
-		this.KW_TexasHoldem = <fgui.GButton>(this.getChildAt(1));
+		this.KW_KW_TH = <fgui.GButton>(this.getChildAt(1));
 	}
 }

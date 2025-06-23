@@ -12,6 +12,7 @@
     <image id="sr0u9" name="clubs_06.png" path="/atlas/"/>
     <image id="sr0ua" name="clubs_10.png" path="/atlas/"/>
     <image id="sr0ub" name="chips16.png" path="/atlas/"/>
+    <component id="a3q2c" name="BtnBack.xml" path="/component/"/>
   </resources>
   <publish name="" path="../GameSelect\assets\holdem\fgui" packageCount="2" genCode="true" codePath="../GameSelect\assets\holdem\layer"/>
 </packageDescription>
