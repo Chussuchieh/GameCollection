@@ -1,0 +1,11 @@
+{
+  "name": "uideclare",
+  "displayName": "",
+  "description": "根据导出包，生成.d.ts",
+  "version": "1.0",
+  "author": {
+    "name": "liurui"
+  },
+  "icon": "",
+  "main": "main.js"
+}

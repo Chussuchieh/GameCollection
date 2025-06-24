@@ -8,5 +8,13 @@
       <relation target="" sidePair="center-center,middle-middle"/>
       <Button title="德州扑克"/>
     </component>
+    <component id="n4_qt52" name="KW_BTN_Event" src="m350b" fileName="component/GameEntries.xml" xy="170,141" size="150,50">
+      <relation target="" sidePair="center-center,middle-middle"/>
+      <Button title="事件测试" titleFontSize="32"/>
+    </component>
+    <component id="n5_qt52" name="KW_BTN_Setting" src="m350b" fileName="component/GameEntries.xml" xy="1048,107" size="150,50">
+      <relation target="" sidePair="center-center,middle-middle"/>
+      <Button title="设置" titleFontSize="32"/>
+    </component>
   </displayList>
 </component>

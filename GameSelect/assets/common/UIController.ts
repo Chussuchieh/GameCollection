@@ -1,8 +1,14 @@
-import { AssetManager, assetManager } from "cc";
+import { AssetManager, assetManager, director } from "cc";
 import * as fgui from "fairygui-cc";
 
-// 实现全局UI命名空间
-export namespace UI {
+// 声明全局变量类型
+declare global {
+    var global: any;
+    var globalThis: any;
+}
+
+namespace UI {
+    // 实现全局UI命名空间
     export enum ViewType {
         Base = 0,
         Pop,
@@ -10,24 +16,14 @@ export namespace UI {
         Loading,
     }
 
-    export interface IViewInfo {
-        name: string;
-        url?: string;
-        bundleName: string;
-        packages: string[];
-        objectName: string;
-        viewType: ViewType;
-        sortingOrder?: number;
+    export abstract class UIView<T> extends fgui.GComponent {
+        view: T;
+        abstract initUI(): void;
     }
 
-    export interface IEventInfo {
+    interface IEventInfo {
         name: string;
-        view: string;
-        originalMethod: Function;
-    }
-
-    export interface IUIView {
-        initUI(): void;
+        method: string;
     }
 
     export class Controller {
@@ -40,8 +36,9 @@ export namespace UI {
             return this._instance;
         }
 
+        private _activeView: fgui.GObject[] = [];
         private _viewInfo: IViewInfo[] = [];
-        private _eventInfo: IEventInfo[] = [];
+        private _eventInfo: Map<string, IEventInfo[]> = new Map();
         private _rootBase: fgui.GComponent | null = null;
         private _rootPop: fgui.GComponent | null = null;
         private _rootToast: fgui.GComponent | null = null;
@@ -70,8 +67,15 @@ export namespace UI {
             this._viewInfo.push(viewInfo);
         }
 
-        addEventInfo(eventInfo: IEventInfo) {
-            this._eventInfo.push(eventInfo);
+        addEventInfo(viewName: string, eventInfo: IEventInfo) {
+            if (!this._eventInfo.has(viewName)) {
+                this._eventInfo.set(viewName, []);
+            }
+            this._eventInfo.get(viewName)?.push(eventInfo);
+        }
+
+        dispatchEvent(eventName: string, ...args: any[]) {
+            director.emit(eventName, ...args);
         }
 
         private async loadBundle(bundleName: string): Promise<boolean> {
@@ -94,6 +98,21 @@ export namespace UI {
                     resolve(true);
                 });
             });
+        }
+
+        closeView(viewName: string) {
+            const view = this._activeView.find((v) => v.constructor.name == viewName);
+            if (view) {
+                const proto = view.constructor.prototype;
+                const eventInfo = this._eventInfo.get(viewName);
+                if (eventInfo) {
+                    for (const info of eventInfo) {
+                        director.off(info.name, proto[info.method], proto);
+                    }
+                }
+                this._activeView = this._activeView.filter((v) => v != view);
+                view.removeFromParent();
+            }
         }
 
         async openView(viewName: string): Promise<boolean> {
@@ -132,21 +151,45 @@ export namespace UI {
                 /**bind event */
                 const handler = ret?.constructor;
                 if (handler) {
+                    const proto = handler.prototype as UIView<any>;
+                    this._activeView.push(ret);
+                    const viewname = handler.name;
+                    const eventInfo = this._eventInfo.get(viewname);
+                    if (eventInfo) {
+                        for (const info of eventInfo) {
+                            director.on(info.name, proto[info.method], proto);
+                        }
+                    }
+                    proto.view = {};
                     ret.asCom._children.forEach((child) => {
+                        proto.view[child.name] = child;
                         if (child instanceof fgui.GButton) {
                             const underScoreName = child.name.split("_");
                             if (underScoreName.length > 0) {
                                 const name = "onBtn" + underScoreName[underScoreName.length - 1];
-                                if (handler.prototype[name]) {
-                                    child.on(fgui.Event.CLICK, handler.prototype[name]);
+                                if (proto[name]) {
+                                    child.on(fgui.Event.CLICK, proto[name], proto);
                                 }
                             }
                         }
                     });
                 }
 
-                (ret as unknown as IUIView)?.initUI();
+                handler.prototype?.initUI();
                 resolve(true);
+            });
+        }
+
+        /**bundle名和场景名一致 */
+        changeScene(sceneName: string) {
+            this._activeView.forEach((view) => {
+                this.closeView(view.constructor.name);
+            });
+            assetManager.loadBundle(sceneName, (err, bundle) => {
+                if (err) {
+                    console.error(err);
+                }
+                director.loadScene(sceneName);
             });
         }
     }
@@ -168,10 +211,9 @@ export namespace UI {
         return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
             const eventInfo: IEventInfo = {
                 name: eventName,
-                view: target.constructor.name,
-                originalMethod: descriptor.value,
+                method: propertyKey,
             };
-            Controller.inst.addEventInfo(eventInfo);
+            Controller.inst.addEventInfo(target.constructor.name, eventInfo);
         };
     }
 }
@@ -181,6 +223,7 @@ interface UI {
     ViewType: typeof UI.ViewType;
     Register: typeof UI.Register;
     Listen: typeof UI.Listen;
+    UIView: typeof UI.UIView;
 }
 
 // 将UI命名空间挂载到全局

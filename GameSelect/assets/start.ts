@@ -4,9 +4,7 @@ const { ccclass, property } = _decorator;
 @ccclass("start")
 export class start extends Component {
     start() {
-        assetManager.loadBundle("hall", () => {
-            director.loadScene("hall");
-        });
+        UI.Controller.inst.changeScene("hall");
     }
 
     update(deltaTime: number) {}

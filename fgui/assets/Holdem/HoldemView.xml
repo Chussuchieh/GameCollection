@@ -8,6 +8,9 @@
     <image id="n8_m350" name="n8" src="m3501" fileName="atlas/hearts.png" xy="477,250" color="#ff0000"/>
     <text id="n9_m350" name="n9" xy="439,188" size="24,44" fontSize="32" color="#ff0000" text="A"/>
     <image id="n12_sr0u" name="n12" src="sr0ua" fileName="atlas/clubs_10.png" xy="589,249"/>
-    <component id="n13_a3q2" name="KW_Back" src="a3q2c" fileName="component/BtnBack.xml" xy="73,38" size="100,35"/>
+    <component id="n13_a3q2" name="KW_BTN_Back" src="a3q2c" fileName="component/BtnBack.xml" xy="73,38" size="100,35"/>
+    <component id="n14_qt52" name="KW_BTN_Event" src="a3q2c" fileName="component/BtnBack.xml" xy="76,178" size="100,35">
+      <Button title="事件测试"/>
+    </component>
   </displayList>
 </component>

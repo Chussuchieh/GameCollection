@@ -16,8 +16,15 @@ export default class HoldemView extends fgui.GComponent {
     }
 
     onBtnBack() {
-        assetManager.loadBundle("hall", () => {
-            director.loadScene("hall");
-        });
+        UI.Controller.inst.changeScene("hall");
+    }
+
+    onBtnEvent() {
+        UI.Controller.inst.dispatchEvent("event_test", "arg1", "arg2");
+    }
+
+    @UI.Listen("event_test")
+    onEventTestInGame(str1: string, str2: string) {
+        console.log("onEventTestInGame", str1, str2);
     }
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="100,50" extention="Button">
+  <displayList>
+    <graph id="n0_qt52" name="n0" xy="0,0" size="100,50" touchable="false" type="rect" lineSize="0" fillColor="#fff0f0f0">
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+    <text id="n3_qt52" name="title" xy="36,15" pivot="0.5,0.5" size="28,19" fontSize="12" align="center" vAlign="middle" text="测试">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </text>
+  </displayList>
+  <Button/>
+</component>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="1334,750">
+  <displayList>
+    <graph id="n0_qt52" name="n0" xy="0,0" size="1334,750" type="rect" lineSize="0" lineColor="#80000000" fillColor="#80000000">
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+    <graph id="n1_qt52" name="n1" xy="365,208" size="603,333" type="rect" lineSize="0" fillColor="#ff009999">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </graph>
+    <component id="n2_qt52" name="KW_BTN_Test" src="qt521" fileName="component/BtnSetCom.xml" xy="836,224">
+      <relation target="" sidePair="center-center,middle-middle"/>
+      <Button title="关闭" titleFontSize="20"/>
+    </component>
+    <component id="n3_qt52" name="KW_BTN_Event" src="qt521" fileName="component/BtnSetCom.xml" xy="467,295">
+      <relation target="" sidePair="center-center,middle-middle"/>
+      <Button title="事件测试" titleFontSize="20"/>
+    </component>
+  </displayList>
+</component>

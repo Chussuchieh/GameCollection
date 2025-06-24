@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="y3tt0z0u">
+  <resources>
+    <component id="qt520" name="SettingView.xml" path="/" exported="true"/>
+    <component id="qt521" name="BtnSetCom.xml" path="/component/"/>
+  </resources>
+  <publish name=""/>
+</packageDescription>

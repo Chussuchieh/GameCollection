@@ -8,6 +8,4 @@ export class holdem extends Component {
         UI.Controller.inst.initFairyGUI();
         UI.Controller.inst.openView("HoldemView");
     }
-
-    update(deltaTime: number) {}
 }
