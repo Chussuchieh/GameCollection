@@ -3,13 +3,13 @@ import UI from "./UIController";
 /** 全局 fgui 命名空间声明 - 映射 fairygui-cc 模块 */
 
 declare global {
-    interface IViewInfo {
+    interface IViewRegInfo {
         name: string;
         url?: string;
         bundleName: string;
         packages: string[];
         objectName: string;
-        viewType: UI.ViewType;
+        viewType: UI.Layer;
     }
     namespace fgui {
         // 从 fairygui-cc 模块导入所有类型

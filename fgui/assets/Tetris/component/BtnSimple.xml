@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="100,30" extention="Button">
+  <displayList>
+    <graph id="n0_u1lr" name="bg" xy="0,0" size="100,30" touchable="false" type="rect" lineSize="0" fillColor="#fff0f0f0">
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+    <text id="n3_u1lr" name="title" xy="28,0" pivot="0.5,0.5" size="44,29" fontSize="20" align="center" vAlign="middle" text="返回"/>
+  </displayList>
+  <Button/>
+</component>

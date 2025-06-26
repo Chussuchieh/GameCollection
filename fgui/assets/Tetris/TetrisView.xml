@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="1334,750">
+  <displayList>
+    <graph id="n24_u1lr" name="n24" xy="0,0" size="1334,750" type="rect" lineSize="0" fillColor="#ff3f599b">
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+    <component id="n5_u1lr" name="KW_BTN_Close" src="u1lr5" fileName="component/BtnSimple.xml" xy="72,49"/>
+    <graph id="n76_u1lr" name="KW_HelperContainer" xy="585,375" pivot="0.5,0.5" anchor="true" size="100,100">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </graph>
+    <graph id="n71_u1lr" name="KW_Helper1" xy="1118,180" pivot="0.5,0.5" anchor="true" size="100,100">
+      <relation target="" sidePair="middle-middle,right-right"/>
+    </graph>
+    <graph id="n72_u1lr" name="KW_Helper2" xy="1118,375" pivot="0.5,0.5" anchor="true" size="100,100">
+      <relation target="" sidePair="middle-middle,right-right"/>
+    </graph>
+    <graph id="n73_u1lr" name="KW_Helper3" xy="1118,573" pivot="0.5,0.5" anchor="true" size="100,100">
+      <relation target="" sidePair="middle-middle,right-right"/>
+    </graph>
+  </displayList>
+</component>

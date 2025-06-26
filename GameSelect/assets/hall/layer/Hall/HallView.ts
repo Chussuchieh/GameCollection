@@ -5,14 +5,23 @@
     bundleName: "hall",
     packages: ["Hall"],
     objectName: "HallView",
-    viewType: UI.ViewType.Base,
+    viewType: UI.Layer.Base,
 })
-export default class HallView extends UI.UIView<FGUI_Hall_HallView_Declare> {
+export default class HallView extends UI.ViewBase<FGUI_Hall_HallView_Declare> {
     initUI() {
         console.log("HallView initUI", this.view.KW_BTN_Event);
     }
 
+    onBtnSetting() {
+        this.openView("SettingView");
+    }
+
     onBtnTH() {
-        UI.Controller.inst.changeScene("holdem");
+        this.changeScene("holdem");
+    }
+
+    @UI.Listen("event_test")
+    onEventTest(arg1: string, arg2: string) {
+        console.log("HallView onEventTest", arg1, arg2);
     }
 }

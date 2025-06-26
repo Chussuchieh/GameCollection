@@ -4,7 +4,7 @@ const { ccclass, property } = _decorator;
 @ccclass("start")
 export class start extends Component {
     start() {
-        UI.Controller.inst.changeScene("hall");
+        UI.Controller.inst.changeScene("tetris");
     }
 
     update(deltaTime: number) {}

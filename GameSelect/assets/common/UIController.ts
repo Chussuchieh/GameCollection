@@ -1,4 +1,4 @@
-import { AssetManager, assetManager, director } from "cc";
+import { AssetManager, assetManager, director, UITransform, v2 } from "cc";
 import * as fgui from "fairygui-cc";
 
 // 声明全局变量类型
@@ -9,16 +9,48 @@ declare global {
 
 namespace UI {
     // 实现全局UI命名空间
-    export enum ViewType {
+    export enum Layer {
         Base = 0,
         Pop,
         Toast,
         Loading,
     }
 
-    export abstract class UIView<T> extends fgui.GComponent {
+    /**UI基类，封装一些常用方法 */
+    export abstract class ViewBase<T> extends fgui.GComponent {
         view: T;
         abstract initUI(): void;
+        dispatch(eventName: string, ...args: any[]) {
+            Controller.inst.dispatchEvent(eventName, ...args);
+        }
+
+        scheduleOnce(callback: () => void, delay: number) {
+            this.node.getComponent(UITransform)?.scheduleOnce(callback, delay);
+        }
+
+        schedule(callback: () => void, delay: number) {
+            this.node.getComponent(UITransform)?.schedule(callback, delay);
+        }
+
+        unschedule(callback: () => void) {
+            this.node.getComponent(UITransform)?.unschedule(callback);
+        }
+
+        changeScene(sceneName: string) {
+            Controller.inst.changeScene(sceneName);
+        }
+
+        openView(viewName: string) {
+            Controller.inst.openView(viewName);
+        }
+
+        closeView(viewName: string) {
+            Controller.inst.closeView(viewName);
+        }
+
+        close() {
+            Controller.inst.closeView(this.constructor.name);
+        }
     }
 
     interface IEventInfo {
@@ -26,6 +58,7 @@ namespace UI {
         method: string;
     }
 
+    /**UI控制器，管理界面，事件，切换场景等操作 */
     export class Controller {
         private static _instance: Controller | null = null;
 
@@ -37,12 +70,16 @@ namespace UI {
         }
 
         private _activeView: fgui.GObject[] = [];
-        private _viewInfo: IViewInfo[] = [];
+        private _viewInfo: IViewRegInfo[] = [];
         private _eventInfo: Map<string, IEventInfo[]> = new Map();
         private _rootBase: fgui.GComponent | null = null;
         private _rootPop: fgui.GComponent | null = null;
         private _rootToast: fgui.GComponent | null = null;
         private _rootLoading: fgui.GComponent | null = null;
+
+        private _screenScale = 1;
+        private _modifyWidth = 0;
+        private _modifyHeight = 0;
 
         initFairyGUI() {
             fgui.GRoot.create();
@@ -61,9 +98,11 @@ namespace UI {
             this._rootLoading = new fgui.GComponent();
             this._rootLoading.makeFullScreen();
             fgui.GRoot.inst.addChild(this._rootLoading);
+
+            this.adaptScreenSize();
         }
 
-        addViewInfo(viewInfo: IViewInfo) {
+        addViewInfo(viewInfo: IViewRegInfo) {
             this._viewInfo.push(viewInfo);
         }
 
@@ -137,47 +176,65 @@ namespace UI {
                     reject(new Error(`createObjectFromURL failed: ${viewInfo.url}`));
                     return;
                 }
-                ret.makeFullScreen();
-                if (viewInfo.viewType == ViewType.Base) {
+
+                ret.setScale(this._screenScale, this._screenScale);
+                if (this._modifyWidth > 0) {
+                    ret.width = this._modifyWidth;
+                } else if (this._modifyHeight > 0) {
+                    ret.height = this._modifyHeight;
+                }
+
+                if (viewInfo.viewType == Layer.Base) {
                     this._rootBase.addChild(ret);
-                } else if (viewInfo.viewType == ViewType.Pop) {
+                } else if (viewInfo.viewType == Layer.Pop) {
                     this._rootPop.addChild(ret);
-                } else if (viewInfo.viewType == ViewType.Toast) {
+                } else if (viewInfo.viewType == Layer.Toast) {
                     this._rootToast.addChild(ret);
-                } else if (viewInfo.viewType == ViewType.Loading) {
+                } else if (viewInfo.viewType == Layer.Loading) {
                     this._rootLoading.addChild(ret);
                 }
 
                 /**bind event */
-                const handler = ret?.constructor;
-                if (handler) {
-                    const proto = handler.prototype as UIView<any>;
-                    this._activeView.push(ret);
-                    const viewname = handler.name;
-                    const eventInfo = this._eventInfo.get(viewname);
-                    if (eventInfo) {
-                        for (const info of eventInfo) {
-                            director.on(info.name, proto[info.method], proto);
-                        }
+                const proto = ret as ViewBase<any>;
+                this._activeView.push(ret);
+                const viewname = proto.constructor.name;
+                const eventInfo = this._eventInfo.get(viewname);
+                if (eventInfo) {
+                    for (const info of eventInfo) {
+                        director.on(info.name, proto[info.method], proto);
                     }
-                    proto.view = {};
-                    ret.asCom._children.forEach((child) => {
-                        proto.view[child.name] = child;
-                        if (child instanceof fgui.GButton) {
-                            const underScoreName = child.name.split("_");
-                            if (underScoreName.length > 0) {
-                                const name = "onBtn" + underScoreName[underScoreName.length - 1];
-                                if (proto[name]) {
-                                    child.on(fgui.Event.CLICK, proto[name], proto);
-                                }
+                }
+                proto.view = {};
+                ret.asCom._children.forEach((child) => {
+                    proto.view[child.name] = child;
+                    if (child instanceof fgui.GButton) {
+                        const underScoreName = child.name.split("_");
+                        if (underScoreName.length > 0) {
+                            const name = "onBtn" + underScoreName[underScoreName.length - 1];
+                            if (proto[name]) {
+                                child.on(fgui.Event.CLICK, proto[name], proto);
                             }
                         }
-                    });
-                }
+                    }
+                });
 
-                handler.prototype?.initUI();
+                proto.initUI();
                 resolve(true);
             });
+        }
+
+        adaptScreenSize() {
+            const designResolution = v2(1334, 750);
+            const screenSize = v2(fgui.GRoot.inst.width, fgui.GRoot.inst.height);
+            if (designResolution.x / designResolution.y > screenSize.x / screenSize.y) {
+                this._screenScale = screenSize.x / designResolution.x;
+                this._modifyHeight = screenSize.y / this._screenScale;
+                this._modifyWidth = 0;
+            } else {
+                this._screenScale = screenSize.y / designResolution.y;
+                this._modifyWidth = screenSize.x / this._screenScale;
+                this._modifyHeight = 0;
+            }
         }
 
         /**bundle名和场景名一致 */
@@ -194,7 +251,8 @@ namespace UI {
         }
     }
 
-    export function Register(viewInfo: IViewInfo) {
+    /**注脚:注册UI信息*/
+    export function Register(viewInfo: IViewRegInfo) {
         return function (target: new (...args: any[]) => any) {
             if (viewInfo.packages.length == 0) {
                 throw new Error("packages is empty");
@@ -207,6 +265,7 @@ namespace UI {
         };
     }
 
+    /**注脚:注册监听 */
     export function Listen(eventName: string) {
         return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
             const eventInfo: IEventInfo = {
@@ -220,10 +279,10 @@ namespace UI {
 
 interface UI {
     Controller: typeof UI.Controller;
-    ViewType: typeof UI.ViewType;
+    Layer: typeof UI.Layer;
     Register: typeof UI.Register;
     Listen: typeof UI.Listen;
-    UIView: typeof UI.UIView;
+    ViewBase: typeof UI.ViewBase;
 }
 
 // 将UI命名空间挂载到全局

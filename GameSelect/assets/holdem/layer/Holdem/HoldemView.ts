@@ -1,5 +1,3 @@
-/** This is an automatically generated class by FairyGUI. Please do not modify it. **/
-
 import { assetManager, director } from "cc";
 import * as fgui from "fairygui-cc";
 
@@ -8,19 +6,19 @@ import * as fgui from "fairygui-cc";
     bundleName: "holdem",
     packages: ["Holdem"],
     objectName: "HoldemView",
-    viewType: UI.ViewType.Base,
+    viewType: UI.Layer.Base,
 })
-export default class HoldemView extends fgui.GComponent {
+export default class HoldemView extends UI.ViewBase<FGUI_Holdem_HoldemView_Declare> {
     initUI() {
         console.log("HoldemView initUI");
     }
 
     onBtnBack() {
-        UI.Controller.inst.changeScene("hall");
+        this.changeScene("hall");
     }
 
     onBtnEvent() {
-        UI.Controller.inst.dispatchEvent("event_test", "arg1", "arg2");
+        this.dispatch("event_test", "arg1", "arg2");
     }
 
     @UI.Listen("event_test")

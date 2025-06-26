@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="gml32q4k">
+  <resources>
+    <component id="u1lr0" name="TetrisView.xml" path="/" exported="true"/>
+    <component id="u1lr1" name="Block.xml" path="/component/" exported="true"/>
+    <component id="u1lr5" name="BtnSimple.xml" path="/component/"/>
+    <component id="u1lr6" name="Blank.xml" path="/component/"/>
+  </resources>
+  <publish name="" path="../GameSelect\assets\tetris\fgui" packageCount="2" codePath="../GameSelect\assets\tetris\fgui\uiDeclare"/>
+</packageDescription>

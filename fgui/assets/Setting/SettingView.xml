@@ -7,7 +7,7 @@
     <graph id="n1_qt52" name="n1" xy="365,208" size="603,333" type="rect" lineSize="0" fillColor="#ff009999">
       <relation target="" sidePair="center-center,middle-middle"/>
     </graph>
-    <component id="n2_qt52" name="KW_BTN_Test" src="qt521" fileName="component/BtnSetCom.xml" xy="836,224">
+    <component id="n2_qt52" name="KW_BTN_Close" src="qt521" fileName="component/BtnSetCom.xml" xy="836,224">
       <relation target="" sidePair="center-center,middle-middle"/>
       <Button title="关闭" titleFontSize="20"/>
     </component>
