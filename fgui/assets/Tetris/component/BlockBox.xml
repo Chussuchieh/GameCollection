@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="75,75">
+  <controller name="C_Color" exported="true" pages="5,null,0,red,1,yellow,2,blue,3,green,4,purple" selected="1"/>
+  <controller name="C_Fill" pages="0,,1," selected="0"/>
+  <displayList>
+    <graph id="n0_u1lr" name="bgTemp" xy="0,0" size="75,75" type="rect" lineSize="2" fillColor="#ffcc3300">
+      <gearDisplay controller="C_Fill" pages="0"/>
+      <gearColor controller="C_Color" pages="5,0,1,2,3,4" values="#34395b|#cc3300|#ffcc00|#66ccff|#66cc00|#cc99ff"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+    <graph id="n1_e8sa" name="bg" xy="0,0" size="75,75" type="rect" lineSize="2" fillColor="#ffcc3300">
+      <gearDisplay controller="C_Fill" pages="1"/>
+      <gearColor controller="C_Color" pages="5,0,1,2,3,4" values="#34395b|#cc3300|#ffcc00|#66ccff|#66cc00|#cc99ff"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+  </displayList>
+</component>
