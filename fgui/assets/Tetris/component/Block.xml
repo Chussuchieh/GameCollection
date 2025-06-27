@@ -2,9 +2,10 @@
 <component size="75,75">
   <controller name="C_Color" exported="true" pages="5,null,0,red,1,yellow,2,blue,3,green,4,purple" selected="0"/>
   <displayList>
-    <graph id="n0_u1lr" name="bg" xy="0,0" size="75,75" type="rect" lineSize="2" fillColor="#ff34395b">
+    <image id="n1_95wv" name="bgTemp" src="95wv8" fileName="atlas/blank.png" xy="0,0" size="75,75" color="#cc99ff">
       <gearColor controller="C_Color" pages="5,0,1,2,3,4" values="#34395b|#cc3300|#ffcc00|#66ccff|#66cc00|#cc99ff"/>
       <relation target="" sidePair="width-width,height-height"/>
-    </graph>
+    </image>
+    <image id="n2_95wv" name="n2" src="95wv9" fileName="atlas/b.png" xy="0,0"/>
   </displayList>
 </component>

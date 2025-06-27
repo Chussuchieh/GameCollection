@@ -7,4 +7,5 @@ declare interface FGUI_Tetris_TetrisView_Declare extends fgui.GComponent {
 	KW_Helper1: fgui.GGraph;
 	KW_Helper2: fgui.GGraph;
 	KW_Helper3: fgui.GGraph;
+	KW_BTN_Replay: fgui.GComponent & FGUI_Tetris_BtnSimple_Declare;
 }

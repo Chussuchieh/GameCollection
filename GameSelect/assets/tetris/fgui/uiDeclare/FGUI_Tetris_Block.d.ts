@@ -3,5 +3,5 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
 declare interface FGUI_Tetris_Block_Declare extends fgui.GComponent {
 	C_Color: fgui.Controller;
-	bg: fgui.GGraph;
+	bgTemp: fgui.GImage;
 }

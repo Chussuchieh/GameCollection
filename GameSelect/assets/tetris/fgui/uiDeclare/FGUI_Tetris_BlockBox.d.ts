@@ -4,6 +4,5 @@
 declare interface FGUI_Tetris_BlockBox_Declare extends fgui.GComponent {
 	C_Color: fgui.Controller;
 	C_Fill: fgui.Controller;
-	bgTemp: fgui.GGraph;
-	bg: fgui.GGraph;
+	bgTemp: fgui.GImage;
 }

@@ -4,7 +4,8 @@
     <component id="u1lr0" name="TetrisView.xml" path="/" exported="true"/>
     <component id="u1lr1" name="Block.xml" path="/component/" exported="true"/>
     <component id="u1lr5" name="BtnSimple.xml" path="/component/"/>
-    <component id="e8sa7" name="BlockBox.xml" path="/component/" exported="true"/>
+    <image id="95wv8" name="blank.png" path="/atlas/"/>
+    <image id="95wv9" name="b.png" path="/atlas/"/>
   </resources>
   <publish name="" path="../GameSelect\assets\tetris\fgui" packageCount="2" codePath="../GameSelect\assets\tetris\fgui\uiDeclare"/>
 </packageDescription>

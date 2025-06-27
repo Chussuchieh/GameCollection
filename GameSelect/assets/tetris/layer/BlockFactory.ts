@@ -13,7 +13,20 @@ export default class BlockFactory {
         return this._instance;
     }
 
+    private _blockPool: BlockBase[] = [];
+
+    recycleBlock(block: BlockBase) {
+        this._blockPool.push(block);
+    }
+
     createSingleBlock(root: fgui.GComponent, color?: number): BlockBase {
+        if (this._blockPool.length > 0) {
+            const block = this._blockPool.pop();
+            if (block) {
+                block.setColor(color);
+                return block;
+            }
+        }
         const single = fgui.UIPackage.createObject("Tetris", "Block").asCom;
         root.addChild(single);
         const pxy = new BlockBase(single);
@@ -22,7 +35,7 @@ export default class BlockFactory {
     }
 
     createSingleBox(root: fgui.GComponent): BlockBase {
-        const single = fgui.UIPackage.createObject("Tetris", "BlockBox").asCom;
+        const single = fgui.UIPackage.createObject("Tetris", "Block").asCom;
         root.addChild(single);
         const pxy = new BlockBase(single);
         return pxy;

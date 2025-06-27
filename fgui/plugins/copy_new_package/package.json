@@ -1,0 +1,22 @@
+{
+  "name": "copy_new_package",
+  "displayName": "复制新资源包",
+  "description": "",
+  "version": "1.0",
+  "author": {
+    "name": "tangxuwang"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "watch": "tsc -w"
+  },
+  "icon": "",
+  "main": "main.js",
+  "devDependencies": {
+    "@types/node": "^16.0.1",
+    "typescript": "^4.3.4"
+  },
+  "dependencies": {
+    "xml2js": "^0.6.2"
+  }
+}
