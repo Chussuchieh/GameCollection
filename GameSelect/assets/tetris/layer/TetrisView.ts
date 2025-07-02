@@ -1,7 +1,7 @@
 import * as fgui from "fairygui-cc";
 import BlockFactory from "./BlockFactory";
 import BlockBase, { BlockColor } from "./BlockBase";
-import BlockShape, { BlockShapeType, blockSize } from "./BlockShape";
+import BlockShape, { BlockGenLevel, BlockShapeType, blockSize } from "./BlockShape";
 import { CONTAINER_SIZE } from "../config/ConfigGame";
 
 @UI.Register({
@@ -18,6 +18,9 @@ export default class TetrisView extends UI.ViewBase<FGUI_Tetris_TetrisView_Decla
     private _activeShapeCnt = 0;
     private _clearLine: number[] = [];
     private _clearRow: number[] = [];
+    private _score = 0;
+    private _startHardScore = 500;
+    private _dragableObject: BlockShape[] = [];
 
     initUI() {
         this.initContainer();
@@ -27,10 +30,11 @@ export default class TetrisView extends UI.ViewBase<FGUI_Tetris_TetrisView_Decla
     initRandomShape(index: number) {
         const helper = this.view[`KW_Helper${index + 1}`];
         let shape = new BlockShape(this);
+        this._dragableObject[index] = shape;
         shape.Root.on(fgui.Event.DRAG_MOVE, this.onDragMove, this);
         shape.Root.on(fgui.Event.DRAG_END, this.onDragEnd, this);
-        shape.Root.data = `${helper.name}`;
-        shape.genShape();
+        shape.Root.data = index;
+        shape.genShape(this._score > this._startHardScore ? BlockGenLevel.hard : BlockGenLevel.simple);
         shape.Root.setPosition(helper.x - shape.Root.width * 0.5, helper.y - shape.Root.height * 0.5);
         this._activeShapeCnt++;
     }
@@ -79,7 +83,13 @@ export default class TetrisView extends UI.ViewBase<FGUI_Tetris_TetrisView_Decla
                 }
             });
         });
+        const index = this._dragingObject.data;
         if (allTrigger.every((trigger) => trigger)) {
+            const pxy = this._dragableObject[index];
+            if (pxy) {
+                this._score += pxy.getScore();
+                this.updateScore();
+            }
             allTriggerContainer.forEach((container) => {
                 container.setFill(true);
                 container.setColor(this._dragingColor);
@@ -90,12 +100,9 @@ export default class TetrisView extends UI.ViewBase<FGUI_Tetris_TetrisView_Decla
                 this.initThreeShape();
             }
         } else {
-            const helperData = this._dragingObject.data;
-            if (this.view[helperData]) {
-                this._dragingObject.setPosition(
-                    this.view[helperData].x - this._dragingObject.width * 0.5,
-                    this.view[helperData].y - this._dragingObject.height * 0.5
-                );
+            const helper = this.view[`KW_Helper${index + 1}`];
+            if (helper) {
+                this._dragingObject.setPosition(helper.x - this._dragingObject.width * 0.5, helper.y - this._dragingObject.height * 0.5);
             }
         }
         this._dragingColor = 0;
@@ -173,6 +180,10 @@ export default class TetrisView extends UI.ViewBase<FGUI_Tetris_TetrisView_Decla
         this.initRandomShape(2);
     }
 
+    updateScore(tween = false): void {
+        this.view.KW_Score.text = this._score.toString();
+    }
+
     onBtnClose() {
         this.changeScene("hall");
     }
@@ -189,5 +200,7 @@ export default class TetrisView extends UI.ViewBase<FGUI_Tetris_TetrisView_Decla
             }
         });
         this.initThreeShape();
+        this._score = 0;
+        this.updateScore();
     }
 }

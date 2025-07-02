@@ -20,5 +20,7 @@
     <graph id="n73_u1lr" name="KW_Helper3" xy="1118,573" pivot="0.5,0.5" anchor="true" size="100,100">
       <relation target="" sidePair="middle-middle,right-right"/>
     </graph>
+    <text id="n78_wjwe" name="KW_Score" xy="102,257" size="22,44" fontSize="32" color="#00cc00" text="0"/>
+    <text id="n79_wjwe" name="score" xy="87,216" size="52,34" fontSize="24" color="#ffffff" text="分数"/>
   </displayList>
 </component>

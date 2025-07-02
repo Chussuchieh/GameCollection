@@ -1,4 +1,4 @@
-import { v2 } from "cc";
+import { v2, Vec2 } from "cc";
 import BlockBase, { BlockColor } from "./BlockBase";
 import BlockFactory from "./BlockFactory";
 import * as fgui from "fairygui-cc";
@@ -31,7 +31,6 @@ export enum BlockShapeType {
     threeTopLeft,
     threeMidLeft,
     threeBottomLeft,
-    end,
     angle2LeftBottom,
     angle2LeftTop,
     angle2RightBottom,
@@ -40,8 +39,14 @@ export enum BlockShapeType {
     angle3LeftTop,
     angle3RightBottom,
     angle3RightTop,
+    end,
     interVer,
     interHor,
+}
+
+export enum BlockGenLevel {
+    simple,
+    hard,
 }
 
 export const blockSize = v2(75, 75);
@@ -58,7 +63,16 @@ export default class BlockShape {
         this._root.draggable = true;
     }
 
-    genShape(shape?: BlockShapeType, color?: number): void {
+    getScore(): number {
+        return this._blocks.length * 8;
+    }
+
+    genShape(level: number, shape?: BlockShapeType, color?: number): void {
+        let end = BlockShapeType.end;
+        if (level == BlockGenLevel.simple) {
+            end = BlockShapeType.threeX2 + 1;
+        }
+
         if (shape === undefined) {
             const index = Math.floor(Math.random() * BlockShapeType.end);
             this._type = index;
@@ -148,9 +162,32 @@ export default class BlockShape {
             case BlockShapeType.threeBottomLeft:
                 this.createThreeTakeOneVerLeft(2);
                 break;
+            case BlockShapeType.angle2LeftBottom:
+                this.createLShape(v2(1, 1), v2(0, 1), v2(1, 0));
+                break;
+            case BlockShapeType.angle2LeftTop:
+                this.createLShape(v2(1, 0), v2(0, 0), v2(1, 1));
+                break;
+            case BlockShapeType.angle2RightBottom:
+                this.createLShape(v2(0, 1), v2(1, 1), v2(0, 0));
+                break;
+            case BlockShapeType.angle2RightTop:
+                this.createLShape(v2(0, 0), v2(1, 0), v2(0, 1));
+                break;
+            case BlockShapeType.angle3LeftBottom:
+                this.createLShape(v2(2, 2), v2(0, 2), v2(2, 0));
+                break;
+            case BlockShapeType.angle3LeftTop:
+                this.createLShape(v2(2, 0), v2(0, 0), v2(2, 2));
+                break;
+            case BlockShapeType.angle3RightBottom:
+                this.createLShape(v2(0, 2), v2(2, 2), v2(0, 0));
+                break;
+            case BlockShapeType.angle3RightTop:
+                this.createLShape(v2(0, 0), v2(2, 0), v2(0, 2));
+                break;
         }
     }
-
     randomColor(): number {
         return Math.floor(Math.random() * BlockColor.purple) + 1;
     }
@@ -168,11 +205,42 @@ export default class BlockShape {
     }
 
     /**L型直角 */
-    createLShape(centerX: number, centerY: number, line: number) {
+    createLShape(center: Vec2, cornerX: Vec2, cornerY: Vec2) {
         const pxy = BlockFactory.inst.createSingleBlock(this._root, this._color);
-        pxy.Node.setPosition(blockSize.x * centerX, blockSize.y * centerY);
+        pxy.Node.setPosition(center.x * blockSize.x, center.y * blockSize.y);
         const pxy1 = BlockFactory.inst.createSingleBlock(this._root, this._color);
-        this._root.setSize(blockSize.x * centerX, blockSize.y * centerY);
+        pxy1.Node.setPosition(cornerX.x * blockSize.x, cornerX.y * blockSize.y);
+        const pxy2 = BlockFactory.inst.createSingleBlock(this._root, this._color);
+        pxy2.Node.setPosition(cornerY.x * blockSize.x, cornerY.y * blockSize.y);
+        this._blocks.push(pxy, pxy1, pxy2);
+        let width = center.x;
+        let height = center.y;
+        if (cornerX.x > center.x) {
+            for (let i = center.x + 1; i < cornerX.x; ++i) {
+                const pxy = BlockFactory.inst.createSingleBlock(this._root, this._color);
+                pxy.Node.setPosition(i * blockSize.x, center.y * blockSize.y);
+            }
+            width = cornerX.x;
+        } else if (cornerX.x < center.x) {
+            for (let i = cornerX.x + 1; i < center.x; ++i) {
+                const pxy = BlockFactory.inst.createSingleBlock(this._root, this._color);
+                pxy.Node.setPosition(i * blockSize.x, center.y * blockSize.y);
+            }
+        }
+
+        if (cornerY.y > center.y) {
+            height = cornerY.y;
+            for (let i = center.y + 1; i < cornerY.y; ++i) {
+                const pxy = BlockFactory.inst.createSingleBlock(this._root, this._color);
+                pxy.Node.setPosition(center.x * blockSize.x, i * blockSize.y);
+            }
+        } else if (cornerY.y < center.y) {
+            for (let i = cornerY.y + 1; i < center.y; ++i) {
+                const pxy = BlockFactory.inst.createSingleBlock(this._root, this._color);
+                pxy.Node.setPosition(center.x * blockSize.x, i * blockSize.y);
+            }
+        }
+        this._root.setSize(width * blockSize.x, height * blockSize.y);
     }
 
     /**三带1 */
