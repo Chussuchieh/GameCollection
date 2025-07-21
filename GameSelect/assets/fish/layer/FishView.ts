@@ -71,7 +71,7 @@ export default class FishView extends UI.ViewBase<FGUI_Fish_FishView_Declare> {
 
     randomLevel() {
         this._level = Math.floor(Math.random() * 5);
-        this.view.KW_TxtLevel.text = this._level + "";
+        this.updateText(this.view.KW_TxtLevel, this._level);
         this.view.KW_Fish.C_Level.selectedIndex = this._level;
     }
 
@@ -87,7 +87,8 @@ export default class FishView extends UI.ViewBase<FGUI_Fish_FishView_Declare> {
         this.view.KW_Fish.y = this._fishMoveRange.y;
         this.view.KW_Handle.y = this._handleMoveRange.y;
         this.view.KW_Progress.value = 5;
-        this.fishMove();
+        this._fishLastMoveTime = new Date().getTime();
+        this.fishMove(this._fishMoveRange.x + this.view.KW_MoveBack.height * 0.5);
         this.schedule(this.update, 0);
     }
 
@@ -154,13 +155,14 @@ export default class FishView extends UI.ViewBase<FGUI_Fish_FishView_Declare> {
     };
 
     private finish(win = false) {
+        this.finishBox(false);
         this._isStart = false;
         this.unschedule(this.update);
         if (win) {
             this._score += this.getScore();
-            this.view.KW_TxtScore.text = this._score + "";
+            this.updateText(this.view.KW_TxtScore, this._score, true);
             this._fishCnt[this._level]++;
-            this.view["KW_TxtCnt" + this._level].text = this._fishCnt[this._level] + "";
+            this.updateText(this.view["KW_TxtCnt" + this._level], this._fishCnt[this._level], true);
         }
         this.view.KW_Progress.value = 0;
         this.view.KW_TxtLevel.text = "0";
@@ -168,13 +170,6 @@ export default class FishView extends UI.ViewBase<FGUI_Fish_FishView_Declare> {
         this.view.KW_Handle.visible = false;
         this._boxShowed = false;
         this._pressingS = false;
-    }
-
-    private finishBox() {
-        this._boxCnt++;
-        this.view.KW_TxtCntBox.text = this._boxCnt + "";
-        this.view.KW_Box.visible = false;
-        this.view.KW_Box.KW_Progress.value = 0;
     }
 
     private getScore() {
@@ -185,15 +180,17 @@ export default class FishView extends UI.ViewBase<FGUI_Fish_FishView_Declare> {
         return 2500 / (this._level + 1);
     }
 
-    private fishMove() {
-        const newPos = Math.random() * (this._fishMoveRange.y - this._handleMoveRange.x) + this._handleMoveRange.x;
+    /**start默认0，从最小开始
+     * 但是第一次不能太小，否则可能直接丢失
+     */
+    private fishMove(startY = this._fishMoveRange.x) {
+        const newPos = Math.random() * (this._fishMoveRange.y - startY) + startY;
         fgui.GTween.kill(this.view.KW_Fish);
         fgui.GTween.to(this.view.KW_Fish.y, newPos, 0.5)
             .setTarget(this.view.KW_Fish, (y: number) => {
                 this.view.KW_Fish.y = y;
             })
             .setEase(fgui.EaseType.SineOut);
-        console.log("fishMove", newPos);
     }
 
     //region 宝箱
@@ -202,5 +199,25 @@ export default class FishView extends UI.ViewBase<FGUI_Fish_FishView_Declare> {
         box.visible = true;
         box.y = Math.random() * (this._boxMoveRange.y - this._boxMoveRange.x) + this._boxMoveRange.x;
         box.KW_Progress.value = 0;
+    }
+
+    private finishBox(get = true) {
+        if (get) {
+            this._boxCnt++;
+            this.updateText(this.view.KW_TxtCntBox, this._boxCnt, true);
+        }
+        this.view.KW_Box.visible = false;
+        this.view.KW_Box.KW_Progress.value = 0;
+    }
+
+    //region 更新文本
+    updateText(node: fgui.GTextField, number: number, ani = false) {
+        node.text = number + "";
+        if (ani) {
+            node.setScale(2, 2);
+            fgui.GTween.to(2, 1, 0.5).setTarget(node, (scale: number) => {
+                node.setScale(scale, scale);
+            });
+        }
     }
 }

@@ -17,21 +17,21 @@
       <Button title="开始"/>
     </component>
     <text id="n13_spkz" name="n13" xy="146,358" size="93,40" fontSize="29" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="积分："/>
-    <text id="n14_spkz" name="KW_TxtScore" xy="246,358" size="21,40" fontSize="29" color="#663399" align="center" vAlign="middle" text="0"/>
+    <text id="n14_spkz" name="KW_TxtScore" xy="246,358" pivot="0.5,0.5" size="21,40" fontSize="29" color="#663399" align="center" vAlign="middle" text="0"/>
     <text id="n15_spkz" name="n15" xy="90,259" pivot="1,0" size="149,40" fontSize="29" color="#ffffff" align="center" vAlign="middle" text="难度等级："/>
-    <text id="n16_spkz" name="KW_TxtLevel" xy="246,259" size="21,40" fontSize="29" color="#663399" align="center" vAlign="middle" text="1"/>
+    <text id="n16_spkz" name="KW_TxtLevel" xy="246,259" pivot="0.5,0.5" size="21,40" fontSize="29" color="#663399" align="center" vAlign="middle" text="1"/>
     <text id="n17_spkz" name="n17" xy="466,74" size="156,29" fontSize="20" color="#ffffff" align="center" vAlign="middle" text="按键S控制滑动条"/>
     <component id="n20_e4af" name="n20" src="e4afb" fileName="component/Fish.xml" xy="730,240"/>
     <component id="n21_e4af" name="n21" src="e4afb" fileName="component/Fish.xml" xy="825,240" controller="C_Level,1"/>
     <component id="n22_e4af" name="n22" src="e4afb" fileName="component/Fish.xml" xy="920,240" controller="C_Level,2"/>
     <component id="n23_e4af" name="n23" src="e4afb" fileName="component/Fish.xml" xy="1015,240" controller="C_Level,3"/>
     <component id="n24_e4af" name="n24" src="e4afb" fileName="component/Fish.xml" xy="1110,240" controller="C_Level,4"/>
-    <text id="n26_e4af" name="KW_TxtCnt0" xy="739,328" size="21,40" fontSize="29" color="#663399" align="center" vAlign="middle" text="0"/>
-    <text id="n27_e4af" name="KW_TxtCnt1" xy="835,328" size="21,40" fontSize="29" color="#663399" align="center" vAlign="middle" text="0"/>
-    <text id="n28_e4af" name="KW_TxtCnt2" xy="931,328" size="21,40" fontSize="29" color="#663399" align="center" vAlign="middle" text="0"/>
-    <text id="n29_e4af" name="KW_TxtCnt3" xy="1027,328" size="21,40" fontSize="29" color="#663399" align="center" vAlign="middle" text="0"/>
-    <text id="n30_e4af" name="KW_TxtCnt4" xy="1123,328" size="21,40" fontSize="29" color="#663399" align="center" vAlign="middle" text="0"/>
-    <text id="n35_e4af" name="KW_TxtCntBox" xy="1234,328" size="21,40" fontSize="29" color="#663399" align="center" vAlign="middle" text="0"/>
+    <text id="n26_e4af" name="KW_TxtCnt0" xy="739,328" pivot="0.5,0.5" size="21,40" fontSize="29" color="#663399" align="center" vAlign="middle" text="0"/>
+    <text id="n27_e4af" name="KW_TxtCnt1" xy="835,328" pivot="0.5,0.5" size="21,40" fontSize="29" color="#663399" align="center" vAlign="middle" text="0"/>
+    <text id="n28_e4af" name="KW_TxtCnt2" xy="931,328" pivot="0.5,0.5" size="21,40" fontSize="29" color="#663399" align="center" vAlign="middle" text="0"/>
+    <text id="n29_e4af" name="KW_TxtCnt3" xy="1027,328" pivot="0.5,0.5" size="21,40" fontSize="29" color="#663399" align="center" vAlign="middle" text="0"/>
+    <text id="n30_e4af" name="KW_TxtCnt4" xy="1123,328" pivot="0.5,0.5" size="21,40" fontSize="29" color="#663399" align="center" vAlign="middle" text="0"/>
+    <text id="n35_e4af" name="KW_TxtCntBox" xy="1234,328" pivot="0.5,0.5" size="21,40" fontSize="29" color="#663399" align="center" vAlign="middle" text="0"/>
     <image id="n34_e4af" name="n34" src="e4afd" fileName="atlas/locked-chest.png" xy="1225,245"/>
   </displayList>
 </component>

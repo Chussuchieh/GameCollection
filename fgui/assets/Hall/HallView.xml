@@ -18,7 +18,7 @@
     </component>
     <component id="n6_spkz" name="KW_BTN_Fish" src="m350b" fileName="component/GameEntries.xml" xy="550,336" size="229,84">
       <relation target="" sidePair="center-center,middle-middle"/>
-      <Button title="钓鱼老"/>
+      <Button title="钓鱼佬"/>
     </component>
     <component id="n7_spkz" name="KW_BTN_Tetris" src="m350b" fileName="component/GameEntries.xml" xy="271,334" size="229,84">
       <relation target="" sidePair="center-center,middle-middle"/>
