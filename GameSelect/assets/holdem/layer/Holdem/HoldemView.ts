@@ -14,7 +14,7 @@ export default class HoldemView extends UI.ViewBase<FGUI_Holdem_HoldemView_Decla
     }
 
     onBtnBack() {
-        this.changeScene("hall");
+        this.changeScene("hall", "HallView");
     }
 
     onBtnEvent() {

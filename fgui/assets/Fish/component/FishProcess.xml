@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="339,30" extention="ProgressBar">
+  <displayList>
+    <graph id="n0_spkz" name="n0" xy="0,0" size="339,30" type="rect" lineSize="3" lineColor="#ff99ff00" fillColor="#ff663333">
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+    <graph id="n1_spkz" name="bar" xy="3,3" size="333,24" type="rect" lineSize="0" fillColor="#ff00cc00"/>
+  </displayList>
+  <ProgressBar/>
+</component>

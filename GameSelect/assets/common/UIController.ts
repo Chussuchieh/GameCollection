@@ -36,8 +36,8 @@ namespace UI {
             this.node.getComponent(UITransform)?.unschedule(callback);
         }
 
-        changeScene(sceneName: string) {
-            Controller.inst.changeScene(sceneName);
+        changeScene(bundleName: string, mainView: string) {
+            Controller.inst.changeScene(bundleName, mainView);
         }
 
         openView(viewName: string) {
@@ -49,7 +49,7 @@ namespace UI {
         }
 
         close() {
-            Controller.inst.closeView(this.constructor.name);
+            Controller.inst.closeView(this.name);
         }
     }
 
@@ -140,9 +140,9 @@ namespace UI {
         }
 
         closeView(viewName: string) {
-            const view = this._activeView.find((v) => v.constructor.name == viewName);
+            const view = this._activeView.find((v) => v.name == viewName);
             if (view) {
-                const proto = view.constructor.prototype;
+                const proto = view;
                 const eventInfo = this._eventInfo.get(viewName);
                 if (eventInfo) {
                     for (const info of eventInfo) {
@@ -197,15 +197,43 @@ namespace UI {
                 /**bind event */
                 const proto = ret as ViewBase<any>;
                 this._activeView.push(ret);
-                const viewname = proto.constructor.name;
-                const eventInfo = this._eventInfo.get(viewname);
+                ret.name = viewName;
+                const eventInfo = this._eventInfo.get(viewName);
                 if (eventInfo) {
                     for (const info of eventInfo) {
                         director.on(info.name, proto[info.method], proto);
                     }
                 }
                 proto.view = {};
+                const loadNode = (node: fgui.GComponent) => {
+                    node._children.forEach((child) => {
+                        if (child.name.includes("KW") == false) {
+                            return;
+                        }
+                        node[child.name] = child;
+                        if (child instanceof fgui.GButton) {
+                            const underScoreName = child.name.split("_");
+                            if (underScoreName.length > 0) {
+                                const name = "onBtn" + underScoreName[underScoreName.length - 1];
+                                if (proto[name]) {
+                                    child.on(fgui.Event.CLICK, proto[name], proto);
+                                }
+                            }
+                        }
+                    });
+
+                    node._controllers.forEach((controller) => {
+                        node[controller.name] = controller;
+                    });
+
+                    node._transitions.forEach((transition) => {
+                        node[transition.name] = transition;
+                    });
+                };
                 ret.asCom._children.forEach((child) => {
+                    if (child.name.includes("KW") == false) {
+                        return;
+                    }
                     proto.view[child.name] = child;
                     if (child instanceof fgui.GButton) {
                         const underScoreName = child.name.split("_");
@@ -216,6 +244,17 @@ namespace UI {
                             }
                         }
                     }
+                    if (child instanceof fgui.GComponent) {
+                        loadNode(child);
+                    }
+                });
+
+                ret.asCom._controllers.forEach((controller) => {
+                    proto.view[controller.name] = controller;
+                });
+
+                ret.asCom._transitions.forEach((transition) => {
+                    proto.view[transition.name] = transition;
                 });
 
                 proto.initUI();
@@ -238,15 +277,15 @@ namespace UI {
         }
 
         /**bundle名和场景名一致 */
-        changeScene(sceneName: string) {
+        changeScene(bundleName: string, mainView: string) {
             this._activeView.forEach((view) => {
-                this.closeView(view.constructor.name);
+                this.closeView(view.name);
             });
-            assetManager.loadBundle(sceneName, (err, bundle) => {
+            assetManager.loadBundle(bundleName, (err, bundle) => {
                 if (err) {
                     console.error(err);
                 }
-                director.loadScene(sceneName);
+                this.openView(mainView);
             });
         }
     }
@@ -268,11 +307,13 @@ namespace UI {
     /**注脚:注册监听 */
     export function Listen(eventName: string) {
         return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+            const frameInfo = (cc as any)[`_RF`].peek();
+            const spName = frameInfo.script;
             const eventInfo: IEventInfo = {
                 name: eventName,
                 method: propertyKey,
             };
-            Controller.inst.addEventInfo(target.constructor.name, eventInfo);
+            Controller.inst.addEventInfo(spName, eventInfo);
         };
     }
 }

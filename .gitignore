@@ -16,6 +16,7 @@ npm-debug.log
 **/library/
 **/settings/
 **/temp/
+**/build/
 **/.vscode/
 **/.creator/
 **/profiles/

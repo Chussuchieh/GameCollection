@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="48,48" extention="ProgressBar">
+  <displayList>
+    <image id="n2_e4af" name="bg" src="e4afh" fileName="atlas/circle.png" xy="0,0"/>
+    <image id="n3_e4af" name="bar" src="e4afg" fileName="atlas/circleIn.png" xy="0,0" fillMethod="radial360"/>
+  </displayList>
+  <ProgressBar/>
+</component>

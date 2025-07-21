@@ -4,8 +4,9 @@ const { ccclass, property } = _decorator;
 @ccclass("start")
 export class start extends Component {
     start() {
-        UI.Controller.inst.changeScene("tetris");
+        assetManager.loadBundle("common", (err, bundle) => {
+            UI.Controller.inst.initFairyGUI();
+            UI.Controller.inst.changeScene("hall", "HallView");
+        });
     }
-
-    update(deltaTime: number) {}
 }

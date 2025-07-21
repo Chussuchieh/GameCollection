@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="48,48" extention="Label">
+  <controller name="C_Level" exported="true" pages="0,,1,,2,,3,,4," selected="0"/>
+  <displayList>
+    <loader id="n1_e4af" name="icon" xy="0,0" size="48,48" url="ui://h6wi6bfje4af9" fill="scaleFree">
+      <gearIcon controller="C_Level" pages="0,1,2,3" values="ui://h6wi6bfje4af9|ui://h6wi6bfje4af8|ui://h6wi6bfje4af7|ui://h6wi6bfje4af6" default="ui://h6wi6bfje4afa"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </loader>
+  </displayList>
+</component>

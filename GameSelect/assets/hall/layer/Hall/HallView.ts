@@ -17,7 +17,15 @@ export default class HallView extends UI.ViewBase<FGUI_Hall_HallView_Declare> {
     }
 
     onBtnTH() {
-        this.changeScene("holdem");
+        this.changeScene("holdem", "HoldemView");
+    }
+
+    onBtnFish() {
+        this.changeScene("fish", "FishView");
+    }
+
+    onBtnTetris() {
+        this.changeScene("tetris", "TetrisView");
     }
 
     @UI.Listen("event_test")

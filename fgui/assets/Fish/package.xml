@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="h6wi6bfj">
+  <resources>
+    <component id="spkz0" name="FishView.xml" path="/" exported="true"/>
+    <component id="spkz1" name="BtnBack.xml" path="/component/"/>
+    <component id="spkz3" name="FishProcess.xml" path="/component/"/>
+    <component id="spkz4" name="MoveHandle.xml" path="/component/"/>
+    <image id="e4af6" name="3.png" path="/atlas/"/>
+    <image id="e4af7" name="2.png" path="/atlas/"/>
+    <image id="e4af8" name="1.png" path="/atlas/"/>
+    <image id="e4af9" name="0.png" path="/atlas/"/>
+    <image id="e4afa" name="4.png" path="/atlas/"/>
+    <component id="e4afb" name="Fish.xml" path="/component/"/>
+    <image id="e4afc" name="active treasure box.png" path="/atlas/"/>
+    <image id="e4afd" name="locked-chest.png" path="/atlas/"/>
+    <component id="e4afe" name="Box.xml" path="/component/"/>
+    <component id="e4aff" name="BoxProgress.xml" path="/component/"/>
+    <image id="e4afg" name="circleIn.png" path="/atlas/"/>
+    <image id="e4afh" name="circle.png" path="/atlas/"/>
+  </resources>
+  <publish name="" path="../GameSelect\assets\fish\fgui" packageCount="2" codePath="../GameSelect\assets\fish\fgui\uiDeclare"/>
+</packageDescription>

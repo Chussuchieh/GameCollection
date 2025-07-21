@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="40,40">
+  <displayList>
+    <image id="n33_e4af" name="bg" src="e4afd" fileName="atlas/locked-chest.png" xy="4,4" size="32,32" aspect="true">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </image>
+    <component id="n35_e4af" name="KW_Progress" src="e4aff" fileName="component/BoxProgress.xml" xy="-4,-3">
+      <ProgressBar value="45" max="100"/>
+    </component>
+  </displayList>
+</component>

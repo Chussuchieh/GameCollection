@@ -185,7 +185,7 @@ export default class TetrisView extends UI.ViewBase<FGUI_Tetris_TetrisView_Decla
     }
 
     onBtnClose() {
-        this.changeScene("hall");
+        this.changeScene("hall", "HallView");
     }
 
     onBtnReplay() {
